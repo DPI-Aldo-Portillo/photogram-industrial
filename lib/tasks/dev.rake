@@ -49,8 +49,33 @@ task({ :sample_data => :environment }) do
 
   # Generate Photos
 
-  # Generate Likes
+  users.each do |user|
+    rand(15).times do
+      photo = user.own_photos.create(
+        caption: Faker::TvShows::Suits.quote,
+        image: "https://robohash.org/#{rand(9999)}"
+      )
 
-  # Generate Comments
+      # Generate Likes
+
+      user.followers.each do |follower|
+        if rand < 0.5
+          photo.fans << follower
+        end
+
+         # Generate Comments
+        if rand < 0.25
+          photo.comments.create(
+            body: Faker::TvShows::Suits.quote,
+            author: follower
+          )
+        end
+      end
+    end
+  end
+
+  p "There are now #{Photo.count} photos."
+  p "There are now #{Like.count} likes."
+  p "There are now #{Comment.count} comments."
 
 end
