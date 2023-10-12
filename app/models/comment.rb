@@ -19,6 +19,7 @@
 #  fk_rails_...  (photo_id => photos.id)
 #
 class Comment < ApplicationRecord
-  belongs_to :author, class_name: "User" #Author needs to reference User table
+  belongs_to :author, class_name: "User", counter_cache: true #Author needs to reference User table
   belongs_to :photo
+
 end
