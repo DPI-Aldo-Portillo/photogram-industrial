@@ -41,17 +41,19 @@ class User < ApplicationRecord
   # Indirect Associations
   has_many :liked_photos, through: :likes, source: :photos
 
-  ## Uses scoped association to get the instances of FollowRequests and get Users
-  has_many :leaders, through: :accepted_sent_follow_requests, source: :recipient
-  has_many :followers, through: :accepted_received_follow_requests, source: :sender
-
   has_many :feed, through: :leaders, source: :own_photos
   has_many :discover, through: :leaders, source: :liked_photos
+
   #Scoped
 
   ## Means following
   has_many :accepted_sent_follow_requests, -> { accepted }, foreign_key: :sender_id, class_name: "FollowRequest"
   ## Means followers
   has_many :accepted_received_follow_requests, -> { accepted }, foreign_key: :recipient_id, class_name: "FollowRequest"
+
+
+    ## Indirect Scoped: Uses scoped association to get the instances of FollowRequests and get Users
+    has_many :leaders, through: :accepted_sent_follow_requests, source: :recipient
+    has_many :followers, through: :accepted_received_follow_requests, source: :sender
 
 end
