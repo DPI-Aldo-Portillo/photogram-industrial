@@ -20,8 +20,8 @@
 #  fk_rails_...  (sender_id => users.id)
 #
 class FollowRequest < ApplicationRecord
-  belongs_to :recipient, class_name: "User", foreign_key: "recipient_id", dependent: :delete_all
-  belongs_to :sender, class_name: "User", foreign_key: "sender_id", dependent: :delete_all
+  belongs_to :recipient, class_name: "User", foreign_key: "recipient_id", dependent: :destroy
+  belongs_to :sender, class_name: "User", foreign_key: "sender_id", dependent: :destroy
 
   # Use ActiveRecord::Enum
   # Also returns positive and negative scopes
