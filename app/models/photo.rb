@@ -29,4 +29,8 @@ class Photo < ApplicationRecord
 
   # Indirect Associations
   has_many :fans, through: :likes
+
+  # Add Scopes
+  scope :past_week, -> { where(created_at: 1.week.ago...) }
+  scope :by_likes, -> { order(likes_count: :desc) }
 end
