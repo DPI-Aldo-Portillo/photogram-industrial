@@ -13,8 +13,8 @@ task({ :sample_data => :environment }) do
   end
 
   #Generate Users
-  12.times do
-    name = Faker::Name.first_name
+  user_list = ["alice", "bob", "carol", "dan", "eve", "craig", "mallory"]
+  user_list.each do |name|
     User.create(
       email: "#{name}@example.com",
       password: "password",
