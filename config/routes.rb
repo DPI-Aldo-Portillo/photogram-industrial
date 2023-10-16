@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :photos
 
   get("/:username/liked" => "users#liked", as: :liked)
+  get("/:username/feed" => "users#feed", as: :feed)
   get("/:username" => "users#show", as: :user) 
   
   ## as: :user makes it so that the path shows username not id
