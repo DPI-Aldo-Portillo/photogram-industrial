@@ -36,13 +36,10 @@ class User < ApplicationRecord
 
   has_many :sent_follow_requests, foreign_key: :sender_id, class_name: "FollowRequest", dependent: :destroy
   has_many :received_follow_requests, foreign_key: :recipient_id, class_name: "FollowRequest", dependent: :destroy
-  has_many :likes, foreign_key: :fan_id
+  has_many :likes, class_name: "Like", foreign_key: :fan_id
 
   # Indirect Associations
-  has_many :liked_photos, through: :likes, source: :photos
-
-  has_many :feed, through: :leaders, source: :own_photos
-  has_many :discover, through: :leaders, source: :liked_photos
+  has_many :liked_photos, through: :likes, source: :photo
 
   #Scoped
 
@@ -55,5 +52,7 @@ class User < ApplicationRecord
     ## Indirect Scoped: Uses scoped association to get the instances of FollowRequests and get Users
     has_many :leaders, through: :accepted_sent_follow_requests, source: :recipient
     has_many :followers, through: :accepted_received_follow_requests, source: :sender
+    has_many :feed, through: :leaders, source: :own_photos
+    has_many :discover, through: :leaders, source: :liked_photos
 
 end
